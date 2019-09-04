@@ -1,34 +1,12 @@
+package service;
+
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+import util.SqlConstaint;
 
 import java.sql.*;
 
 public class Service {
 
-    private static final String TABELA_CONTATO = "CREATE TABLE IF NOT EXISTS contact(" +
-            " contact_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-            " first_name VARCHAR2(300) NOT NULL," +
-            " last_name VARCHAR2(300) NOT NULL," +
-            " mail VARCHAR2(300) NOT NULL);";
-
-    private static final String TABELA_PHONES = "CREATE TABLE IF NOT EXISTS phones(" +
-            " phone_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-            " phone VARCHAR2(300) NOT NULL);";
-
-    private static final String TABELA_GROUPS = "CREATE TABLE IF NOT EXISTS groups(" +
-            " group_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-            " description VARCHAR2(300) NOT NULL);";
-
-    private static final String CONTACT_PHONES = "CREATE TABLE IF NOT EXISTS contact_phones (" +
-            " contact_id integer (10)," +
-            "phones_id integer(10)," +
-            "FOREIGN KEY (contact_id) REFERENCES  contact(contact_id)," +
-            "FOREIGN KEY (phones_id) REFERENCES  phones(phone_id));";
-
-    private static final String CONTACT_GROUPS = "CREATE TABLE IF NOT EXISTS contact_groups (" +
-            " contact_id integer (10)," +
-            " groups_id integer(10)," +
-            "FOREIGN KEY (contact_id) REFERENCES  contact(contact_id)," +
-            "FOREIGN KEY (groups_id) REFERENCES  phones(group_id));";
 
 
     public Statement connect(Connection connection)  {
@@ -47,20 +25,17 @@ public class Service {
     }
 
     public void dropTables(Statement state) throws SQLException {
-        String droptables = "DROP TABLE contact ";
-        String droptable2 = "DROP TABLE phones ";
-        String droptable3 = "DROP TABLE groups ";
-        state.execute(droptables);
-        state.execute(droptable2);
-        state.execute(droptable3);
+        state.execute(SqlConstaint.DROP_TABLE_CONTACT);
+        state.execute(SqlConstaint.CONTACT_PHONES);
+        state.execute(SqlConstaint.CONTACT_GROUPS);
     }
 
     public void createTables(Statement state) throws SQLException {
-        state.execute(TABELA_CONTATO);
-        state.execute(TABELA_PHONES);
-        state.execute(TABELA_GROUPS);
-        state.execute(CONTACT_PHONES);
-        state.execute(CONTACT_GROUPS);
+        state.execute(SqlConstaint.TABELA_CONTATO);
+        state.execute(SqlConstaint.TABELA_PHONES);
+        state.execute(SqlConstaint.TABELA_GROUPS);
+        state.execute(SqlConstaint.CONTACT_PHONES);
+        state.execute(SqlConstaint.CONTACT_GROUPS);
         System.out.println("Tabelas criadas");
 
     }
