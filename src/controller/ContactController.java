@@ -9,7 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Controller {
+public class ContactController {
 
     public Statement connect(Connection connection)  {
         Statement state = null;
@@ -43,18 +43,6 @@ public class Controller {
         String insert = String.format("insert into contact(first_name, last_name, mail) values('%s', '%s', '%s')", contato.getFirstName(), contato.getLastName(), contato.getMail());
         state.execute(insert);
         System.out.printf("Usuário %s inserido com sucesso%n", contato.getFirstName());
-    }
-
-    public void insertPhones(Statement state, Phone phone) throws SQLException {
-        String insert = String.format("insert into phones(phone) values('%s')", phone.getNumero());
-        state.execute(insert);
-        System.out.printf("Telefone %s inserido com sucesso%n", phone.getNumero());
-    }
-
-    public void insertGroups(Statement state, Groups groups) throws SQLException {
-        String insert = String.format("insert into groups(description) values('%s')", groups.getDescricao());
-        state.execute(insert);
-        System.out.printf("Grupo %s inserido com sucesso%n", groups.getDescricao());
     }
 
     public List<Contato> findAllContact(Statement state) throws SQLException {
@@ -91,15 +79,5 @@ public class Controller {
         }
     }
 
-    public List<Phone> findAllPhones(Statement statement) throws SQLException {
-        ResultSet resultSet = statement.executeQuery("select * from phones");
-        List<Phone> phones = new ArrayList<>();
-        while (resultSet.next()) {
-            Phone phone = new Phone();
-            phone.setPhoneId(resultSet.getInt("phone_id"));
-            phone.setNumero(resultSet.getString("phone"));
-            phones.add(phone);
-        }
-        return phones;
-    }
+
 }

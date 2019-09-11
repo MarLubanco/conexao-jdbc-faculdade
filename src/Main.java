@@ -1,4 +1,6 @@
-import controller.Controller;
+import controller.ContactController;
+import controller.GroupController;
+import controller.PhoneController;
 import model.Contato;
 import model.Groups;
 import model.Phone;
@@ -10,7 +12,9 @@ import java.util.Scanner;
 public class Main {
 
     public static void connect() throws SQLException {
-        Controller service = new Controller();
+        ContactController service = new ContactController();
+        GroupController groupController = new GroupController();
+        PhoneController phoneController = new PhoneController();
         Connection connection = null;
         Scanner scanner = new Scanner(System.in);
 
@@ -43,14 +47,15 @@ public class Main {
                     System.out.println("Digite telefone: ");
                     String telefone = scanner.next();
                     Phone phoneNovo =  new Phone(telefone);
-                    service.insertPhones(state, phoneNovo);
-                    service.findAllPhones(state).forEach(phone -> System.out.println(phone.toString()));
+                    phoneController.insertPhones(state, phoneNovo);
+                    phoneController.findAllPhones(state).forEach(phone -> System.out.println(phone.toString()));
                     break;
                 case "3":
                     System.out.println("Digite descrição do grupo: ");
                     String descricao = scanner.next();
-                    Groups groupsNovo =  new Groups(descricao);
-                    service.insertGroups(state, groupsNovo);
+                    Groups groupsNovo = new Groups(descricao);
+                    groupController.insertGroups(state, groupsNovo);
+                    groupController.findAllGroups(state).forEach(group -> System.out.println(group.toString()));;
                     break;
                 default:
                     System.out.println("Opção inválida");
@@ -58,16 +63,8 @@ public class Main {
             }
 
         }
-//        controller.createTables(state);
-//        controller.insertContact(state, "thome", "marcelo", "asdalll");
-//        controller.insertContact(state, "caraii", "marcelo", "asdalll");
-//        controller.insertPhones(state, "99955566");
-//        controller.insertGroups(state, "GRUPO LEGAL");
-//        controller.findAllContact(state);
-//        controller.findContactByName(state,"thome");
-//        controller.findContactById(state,12);
-
     }
+
     public static  void main(String args[]) throws SQLException {
         connect();
     }
