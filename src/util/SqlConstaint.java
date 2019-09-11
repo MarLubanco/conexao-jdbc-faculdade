@@ -31,4 +31,6 @@ public  class SqlConstaint {
     public static final String DROP_TABLE_CONTACT = "DROP TABLE contact ";
     public static final String DROP_TABLE_PHONE = "DROP TABLE phones ";
     public static final String DROP_TABLE_GROUP = "DROP TABLE groups ";
+    public static final String DROP_TABLE_CONTACT_GROUPS = "DROP TABLE contact_groups ";
+    public static final String DROP_TABLE_CONTACT_PHONES = "DROP TABLE contact_phones ";
 }
