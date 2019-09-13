@@ -19,7 +19,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         Statement state = service.connect(connection);
-//        service.dropTables(state);
+        service.dropTables(state);
 
         service.createTables(state);
         System.out.println("Banco de dados limpo");
@@ -27,7 +27,9 @@ public class Main {
         while (true) {
             System.out.println("1 - Inserir Contato \n" +
                     "2 - Inserir Phone \n" +
-                    "3 - Inserir Group");
+                    "3 - Inserir Group \n" +
+                    "4 - Pesquisar contato por nome \n" +
+                    "5 - Pesquisar contato por id");
             String opcao = scanner.next();
             switch (opcao){
                 case "1":
@@ -37,26 +39,48 @@ public class Main {
                     String sobrenome =scanner.next();
                     System.out.print("Digite o email: ");
                     String email =scanner.next();
-                    Contato contatoNovo =  new Contato(nome, sobrenome, email);
-                    service.insertContact(state, contatoNovo);
-                    System.out.println("Contato inserido com sucesso!");
-                    List<Contato> allContact = service.findAllContact(state);
-                    allContact.forEach(contato -> System.out.println(contato.toString()));
-                    break;
-                case "2":
                     System.out.println("Digite telefone: ");
                     String telefone = scanner.next();
                     Phone phoneNovo =  new Phone(telefone);
                     phoneController.insertPhones(state, phoneNovo);
                     phoneController.findAllPhones(state).forEach(phone -> System.out.println(phone.toString()));
-                    break;
-                case "3":
+                    Contato contatoNovo =  new Contato(nome, sobrenome, email);
+                    service.insertContact(state, contatoNovo);
+                    service.insertContactPhone(state, contatoNovo, phoneNovo);
+                    System.out.println("Contato inserido com sucesso!");
+                    List<Contato> allContact = service.findAllContact(state);
+                    allContact.forEach(contato -> System.out.println(contato.toString()));
                     System.out.println("Digite descrição do grupo: ");
                     String descricao = scanner.next();
                     Groups groupsNovo = new Groups(descricao);
                     groupController.insertGroups(state, groupsNovo);
-                    groupController.findAllGroups(state).forEach(group -> System.out.println(group.toString()));;
+                    service.insertContactGroup(state, contatoNovo, groupsNovo);
                     break;
+                case "2":
+                    System.out.println("Digite telefone: ");
+                    String tel = scanner.next();
+                    Phone phone =  new Phone(tel);
+                    phoneController.insertPhones(state, phone);
+                    phoneController.findAllPhones(state).forEach(p -> System.out.println(p.toString()));
+                    break;
+                case "3":
+                    System.out.println("Digite descrição do grupo: ");
+                    String desc = scanner.next();
+                    Groups groups = new Groups(desc);
+                    groupController.insertGroups(state, groups);
+                    groupController.findAllGroups(state).forEach(group -> System.out.println(group.toString()));
+                    break;
+                case "4":
+                    System.out.println("Digite o nome para pesquisar: ");
+                    String nomePesquisa = scanner.next();
+                    service.findContactByName(state, nomePesquisa);
+                    break;
+                case "5":
+                    System.out.println("Digite o id do contato pesquisar: ");
+                    int id = scanner.nextInt();
+                    service.findContactById(state, id);
+                    break;
+
                 default:
                     System.out.println("Opção inválida");
                     break;

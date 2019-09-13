@@ -45,6 +45,38 @@ public class ContactController {
         System.out.printf("Usuário %s inserido com sucesso%n", contato.getFirstName());
     }
 
+    public void insertContactPhone(Statement state, Contato contato, Phone phone) throws SQLException {
+        ResultSet resultSetPhone = state.executeQuery(String.format("SELECT * FROM phones where phone ='%s'", phone.getNumero()));
+        int phone_id = 0;
+        while (resultSetPhone.next()) {
+            phone_id = resultSetPhone.getInt("phone_id");
+        }
+        ResultSet resultSet = state.executeQuery(String.format("SELECT * FROM contact where first_name ='%s'", contato.getFirstName()));
+        int contact_id = 0;
+        while (resultSet.next()) {
+            contact_id = resultSet.getInt("contact_id");
+        }
+        String insert = String.format("insert into contact_phones(contact_id, phones_id) values('%s', '%s')", contact_id, phone_id);
+        state.execute(insert);
+        System.out.printf("Usuário Telefone %s inserido com sucesso%n", contato.getFirstName());
+    }
+
+    public void insertContactGroup(Statement state, Contato contato, Groups groups) throws SQLException {
+        ResultSet resultSetPhone = state.executeQuery(String.format("SELECT * FROM groups where description ='%s'", groups.getDescricao()));
+        int groups_id = 0;
+        while (resultSetPhone.next()) {
+            groups_id = resultSetPhone.getInt("group_id");
+        }
+        ResultSet resultSet = state.executeQuery(String.format("SELECT * FROM contact where first_name ='%s'", contato.getFirstName()));
+        int contact_id = 0;
+        while (resultSet.next()) {
+            contact_id = resultSet.getInt("contact_id");
+        }
+        String insert = String.format("insert into contact_groups(contact_id, groups_id) values('%s', '%s')", contact_id, groups_id);
+        state.execute(insert);
+        System.out.printf("Usuário Telefone %s inserido com sucesso%n", contato.getFirstName());
+    }
+
     public List<Contato> findAllContact(Statement state) throws SQLException {
         ResultSet resultSet = state.executeQuery("select * from contact;");
         List<Contato> contatos = new ArrayList<>();
@@ -62,20 +94,24 @@ public class ContactController {
     public void findContactById(Statement state, Integer id) throws SQLException {
         ResultSet resultSet = state.executeQuery(String.format("select * from contact where contact_id = %d ;", id));
         while (resultSet.next()) {
-            String first_name = resultSet.getString("first_name");
-            String last_name = resultSet.getString("last_name");
-            String mail = resultSet.getString("mail");
-            System.out.println(String.format("Contato: %s , %s, %s",first_name, last_name, mail));
+            Contato contato = new Contato();
+            contato.setContactId(resultSet.getInt("contact_id"));
+            contato.setFirstName(resultSet.getString("first_name"));
+            contato.setLastName(resultSet.getString("last_name"));
+            contato.setMail(resultSet.getString("mail"));
+            System.out.println(contato.toString());
         }
     }
 
     public void findContactByName(Statement state, String fname) throws SQLException {
         ResultSet resultSet = state.executeQuery(String.format("select * from contact where first_name = '%s' ;", fname));
         while (resultSet.next()) {
-            String first_name = resultSet.getString("first_name");
-            String last_name = resultSet.getString("last_name");
-            String mail = resultSet.getString("mail");
-            System.out.println(String.format("Contato: %s , %s, %s",first_name, last_name, mail));
+            Contato contato = new Contato();
+            contato.setContactId(resultSet.getInt("contact_id"));
+            contato.setFirstName(resultSet.getString("first_name"));
+            contato.setLastName(resultSet.getString("last_name"));
+            contato.setMail(resultSet.getString("mail"));
+            System.out.println(contato.toString());
         }
     }
 
