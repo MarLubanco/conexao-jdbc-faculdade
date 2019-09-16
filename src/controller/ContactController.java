@@ -116,4 +116,20 @@ public class ContactController {
     }
 
 
+    public void linkarUserNumero(Statement state, String numero, String nomeContato) throws SQLException {
+        ResultSet resultSet = state.executeQuery(String.format("select * from contact where first_name = '%s' ;", nomeContato));
+        int id = 0;
+        while (resultSet.next()) {
+            id = resultSet.getInt("contact_id");
+        }
+        ResultSet resultSetPhone = state.executeQuery(String.format("select * from phones where phone = '%s'", numero));
+        int id_phone = 0;
+        while (resultSet.next()) {
+            id_phone = resultSet.getInt("phone_id");
+        }
+
+        String insert = String.format("insert into contact_phones(contact_id, phones_id) values('%s', '%s')", id, id_phone);
+        state.execute(insert);
+        System.out.println("Usuário Telefone %s inserido com sucesso%n");
+    }
 }

@@ -20,7 +20,6 @@ public class Main {
 
         Statement state = service.connect(connection);
         service.dropTables(state);
-
         service.createTables(state);
         System.out.println("Banco de dados limpo");
         System.out.println("Banco de dados conectado");
@@ -29,7 +28,8 @@ public class Main {
                     "2 - Inserir Phone \n" +
                     "3 - Inserir Group \n" +
                     "4 - Pesquisar contato por nome \n" +
-                    "5 - Pesquisar contato por id");
+                    "5 - Pesquisar contato por id\n" +
+                    "6 - Relacionar Contato com Numero");
             String opcao = scanner.next();
             switch (opcao){
                 case "1":
@@ -80,7 +80,13 @@ public class Main {
                     int id = scanner.nextInt();
                     service.findContactById(state, id);
                     break;
-
+                case "6":
+                    System.out.println("Linkar numero a contato: ");
+                    String numero = scanner.next();
+                    System.out.println("Nome contato:  ");
+                    String nomeContato = scanner.next();
+                    service.linkarUserNumero(state, numero, nomeContato);
+                    break;
                 default:
                     System.out.println("Opção inválida");
                     break;
