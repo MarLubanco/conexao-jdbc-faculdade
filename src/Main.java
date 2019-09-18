@@ -37,24 +37,30 @@ public class Main {
                     String nome = scanner.next();
                     System.out.print("Digite sobrenome:");
                     String sobrenome =scanner.next();
-                    System.out.print("Digite o email: ");
-                    String email =scanner.next();
-                    System.out.println("Digite telefone: ");
-                    String telefone = scanner.next();
-                    Phone phoneNovo =  new Phone(telefone);
-                    phoneController.insertPhones(state, phoneNovo);
-                    phoneController.findAllPhones(state).forEach(phone -> System.out.println(phone.toString()));
-                    Contato contatoNovo =  new Contato(nome, sobrenome, email);
+                    System.out.println("Digite o email: ");
+                    String email = scanner.next();
+                    System.out.println("Deseja adicionar um telefone e grupo(S/N)? ");
+                    String controle= scanner.next();
+                    Contato contatoNovo = new Contato(nome, sobrenome, email);
                     service.insertContact(state, contatoNovo);
-                    service.insertContactPhone(state, contatoNovo, phoneNovo);
-                    System.out.println("Contato inserido com sucesso!");
                     List<Contato> allContact = service.findAllContact(state);
                     allContact.forEach(contato -> System.out.println(contato.toString()));
-                    System.out.println("Digite descrição do grupo: ");
-                    String descricao = scanner.next();
-                    Groups groupsNovo = new Groups(descricao);
-                    groupController.insertGroups(state, groupsNovo);
-                    service.insertContactGroup(state, contatoNovo, groupsNovo);
+                    if(controle.equalsIgnoreCase("S")) {
+                        System.out.println("Digite telefone: ");
+                        String telefone = scanner.next();
+                        Phone phoneNovo = new Phone(telefone);
+                        phoneController.insertPhones(state, phoneNovo);
+//                        phoneController.findAllPhones(state).forEach(phone -> System.out.println(phone.toString()));
+                        service.insertContactPhone(state, contatoNovo, phoneNovo);
+                        System.out.println("Contato inserido com sucesso!");
+//
+                        System.out.println("Digite descrição do grupo: ");
+                        String descricao = scanner.next();
+                        Groups groupsNovo = new Groups(descricao);
+                        groupController.insertGroups(state, groupsNovo);
+                        service.insertContactGroup(state, contatoNovo, groupsNovo);
+                    }
+
                     break;
                 case "2":
                     System.out.println("Digite telefone: ");
@@ -86,6 +92,13 @@ public class Main {
                     System.out.println("Nome contato:  ");
                     String nomeContato = scanner.next();
                     service.linkarUserNumero(state, numero, nomeContato);
+                    break;
+                case "7":
+                    System.out.println("Linkar grupo a contato: ");
+                    String grupo = scanner.next();
+                    System.out.println("Nome contato:  ");
+                    String nomeContact = scanner.next();
+                    service.linkarUserNumero(state, grupo, nomeContact);
                     break;
                 default:
                     System.out.println("Opção inválida");

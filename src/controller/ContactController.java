@@ -122,14 +122,14 @@ public class ContactController {
         while (resultSet.next()) {
             id = resultSet.getInt("contact_id");
         }
-        ResultSet resultSetPhone = state.executeQuery(String.format("select * from phones where phone = '%s'", numero));
-        int id_phone = 0;
+        ResultSet resultSetPhone = state.executeQuery(String.format("select * from groups where description = '%s'", numero));
+        int group_id = 0;
         while (resultSet.next()) {
-            id_phone = resultSet.getInt("phone_id");
+            group_id = resultSet.getInt("group_id");
         }
 
-        String insert = String.format("insert into contact_phones(contact_id, phones_id) values('%s', '%s')", id, id_phone);
+        String insert = String.format("insert into contact_phones(contact_id, phones_id) values('%s', '%s')", id, group_id);
         state.execute(insert);
-        System.out.println("Usuário Telefone %s inserido com sucesso%n");
+        System.out.println("Usuário Grupo inserido com sucesso");
     }
 }
