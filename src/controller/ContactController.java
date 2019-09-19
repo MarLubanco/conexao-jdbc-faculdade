@@ -132,4 +132,21 @@ public class ContactController {
         state.execute(insert);
         System.out.println("Usuário Grupo inserido com sucesso");
     }
+
+    public void deletarContact(Statement statement, String email) throws SQLException {
+       statement.execute(String.format("delete from contact where mail='%s'", email));
+    }
+
+    public void listarTodosContatosDoGrupo(Statement state, String grupoName) throws SQLException {
+        ResultSet resultSet = state.executeQuery(String.format("select * from contact " +
+                "inner join contact_groups on contact.contact_id = contact_groups.contact_id " +
+                "inner join groups on groups.group_id = contact_groups.group_id " +
+                "where description = '%s'", grupoName));
+
+        List<String> nomesContatos = new ArrayList<>();
+        while (resultSet.next()) {
+            nomesContatos.add(resultSet.getString("first_name"));
+        }
+        nomesContatos.forEach(System.out::println);
+    }
 }
