@@ -1,5 +1,6 @@
 
 
+
 <div align="center">
   <strong>Lista Telefônica MVC</strong>
 </div>
@@ -19,13 +20,17 @@ Banco: SQLite
 
 Ao iniciar o projeto, será listado um menu com 4 opções:
 
-| |COMANDOS|  |  | |
-|---|---|---|---|---|
-Inserir Contato|Essa função é para adicionar um novo contato, podendo ter a opção de já adiciona-lo em um grupo . | | | | |
-Inserir Phone | Inserir um número de telefone novo.||| | |
-Inserir Group | Inserir um novo grupo  | | | | |
-Pesquisar contato por nome ou Id| Função para pesquisar um contato pelo nome ou pelo id  ||| | |
-
+| |COMANDOS|
+|---|---|
+Inserir Contato|Essa função é para adicionar um novo contato, podendo ter a opção de já adiciona-lo em um grupo . | |
+Inserir Phone | Inserir um número de telefone novo.||
+Inserir Group | Inserir um novo grupo  | |
+Pesquisar contato por nome ou Id| Função para pesquisar um contato pelo nome ou pelo id  ||
+Relacionar Contato com Numero| Função para relacionar um telefone a um contato existente  ||
+Relacionar Contato com Grupo| Função para inserir um contato em um grupo  ||
+Deletar contato | Deletar um contato pelo email dele ||
+Listar contatos do grupo  | Listar todos os contatos de um grupo ||
+Listar contatos  | Listar todos os contatos existentes||
 
 Colaborar para a atividade:
 
@@ -38,7 +43,7 @@ cd conexao-jdbc-faculdade
 ## Documentação
 - **Caso de Uso —**
 
-![readme-intro](documentacao/caso-uso/caso-de-uso-final.png)
+![readme-intro](documentacao/casouso.png)
 
 - **Diagrama de Sequência —**
 

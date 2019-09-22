@@ -1,7 +1,6 @@
 package controller;
 
 import model.Contato;
-import model.Groups;
 import model.Phone;
 import util.SqlConstaint;
 
@@ -61,20 +60,20 @@ public class ContactController {
         System.out.printf("Usuário Telefone %s inserido com sucesso%n", contato.getFirstName());
     }
 
-    public void insertContactGroup(Statement state, Contato contato, Groups groups) throws SQLException {
-        ResultSet resultSetPhone = state.executeQuery(String.format("SELECT * FROM groups where description ='%s'", groups.getDescricao()));
+    public void insertContactGroup(Statement state, String contato, String groups) throws SQLException {
+        ResultSet resultSetGrupo = state.executeQuery(String.format("SELECT * FROM groups where description ='%s'", groups));
         int groups_id = 0;
-        while (resultSetPhone.next()) {
-            groups_id = resultSetPhone.getInt("group_id");
+        while (resultSetGrupo.next()) {
+            groups_id = resultSetGrupo.getInt("group_id");
         }
-        ResultSet resultSet = state.executeQuery(String.format("SELECT * FROM contact where first_name ='%s'", contato.getFirstName()));
+        ResultSet resultSet = state.executeQuery(String.format("SELECT * FROM contact where first_name ='%s'", contato));
         int contact_id = 0;
         while (resultSet.next()) {
             contact_id = resultSet.getInt("contact_id");
         }
         String insert = String.format("insert into contact_groups(contact_id, groups_id) values('%s', '%s')", contact_id, groups_id);
         state.execute(insert);
-        System.out.printf("Usuário Telefone %s inserido com sucesso%n", contato.getFirstName());
+        System.out.printf("Usuário contato %s inserido com sucesso%n", contato);
     }
 
     public List<Contato> findAllContact(Statement state) throws SQLException {
@@ -140,13 +139,17 @@ public class ContactController {
     public void listarTodosContatosDoGrupo(Statement state, String grupoName) throws SQLException {
         ResultSet resultSet = state.executeQuery(String.format("select * from contact " +
                 "inner join contact_groups on contact.contact_id = contact_groups.contact_id " +
-                "inner join groups on groups.group_id = contact_groups.group_id " +
+                "inner join groups on groups.group_id = contact_groups.groups_id " +
                 "where description = '%s'", grupoName));
 
         List<String> nomesContatos = new ArrayList<>();
         while (resultSet.next()) {
             nomesContatos.add(resultSet.getString("first_name"));
         }
+        System.out.println("CONTATOS DO GRUPO - " + grupoName);
+        System.out.println("__________________________________");
         nomesContatos.forEach(System.out::println);
     }
+
+
 }

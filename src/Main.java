@@ -32,7 +32,8 @@ public class Main {
                     "6 - Relacionar Contato com Numero\n" +
                     "7 - Relacionar Contato com Grupo\n" +
                     "8 - Deletar contato\n" +
-                    "9 - Listar contatos do grupo");
+                    "9 - Listar contatos do grupo \n" +
+                    "10 -  Listar contatos ");
             String opcao = scanner.next();
             switch (opcao){
                 case "1":
@@ -46,14 +47,11 @@ public class Main {
                     String controle= scanner.next();
                     Contato contatoNovo = new Contato(nome, sobrenome, email);
                     service.insertContact(state, contatoNovo);
-                    List<Contato> allContact = service.findAllContact(state);
-                    allContact.forEach(contato -> System.out.println(contato.toString()));
                     if(controle.equalsIgnoreCase("S")) {
                         System.out.println("Digite telefone: ");
                         String telefone = scanner.next();
                         Phone phoneNovo = new Phone(telefone);
                         phoneController.insertPhones(state, phoneNovo);
-//                        phoneController.findAllPhones(state).forEach(phone -> System.out.println(phone.toString()));
                         service.insertContactPhone(state, contatoNovo, phoneNovo);
                         System.out.println("Contato inserido com sucesso!");
                     }
@@ -64,7 +62,7 @@ public class Main {
                         String descricao = scanner.next();
                         Groups groupsNovo = new Groups(descricao);
                         groupController.insertGroups(state, groupsNovo);
-                        service.insertContactGroup(state, contatoNovo, groupsNovo);
+                        service.insertContactGroup(state, contatoNovo.getFirstName(), groupsNovo.getDescricao());
                     }
                     break;
 
@@ -105,11 +103,11 @@ public class Main {
                     break;
 
                 case "7":
-                    System.out.println("Linkar grupo a contato: ");
+                    System.out.println("Adionar contato ao grupo, digite o nome do grupo: ");
                     String grupo = scanner.next();
                     System.out.println("Nome contato:  ");
                     String nomeContact = scanner.next();
-                    service.linkarUserNumero(state, grupo, nomeContact);
+                    service.insertContactGroup(state, grupo, nomeContact);
                     break;
 
                 case "8":
@@ -123,6 +121,11 @@ public class Main {
                     System.out.println("Nome do grupo: ");
                     String grupoName = scanner.next();
                     service.listarTodosContatosDoGrupo(state, grupoName);
+                    break;
+
+                case "10":
+                    service.findAllContact(state).forEach(contato -> System.out.println(contato.toString()));
+                    break;
 
                 default:
                     System.out.println("Opção inválida");
