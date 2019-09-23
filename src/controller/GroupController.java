@@ -28,4 +28,9 @@ public class GroupController {
         }
         return allGroups;
     }
+
+    public void deletarGroup(Statement state, String grupoRemove) throws SQLException {
+     state.execute("delete from groups where description = '" + grupoRemove + "'");
+     System.out.println("Grupo removido");
+    }
 }
