@@ -33,9 +33,8 @@ public class Main {
                     "7 - Relacionar Contato com Grupo\n" +
                     "8 - Deletar contato\n" +
                     "9 - Listar contatos do grupo \n" +
-                    "10 -  Listar contatos \n" +
-                    "11 - Listar todos os grupos\n" +
-                    "12 - Deletar grupo");
+                    "10 - Listar contatos \n" +
+                    "11 - Deletar grupo");
             String opcao = scanner.next();
             switch (opcao){
                 case "1":
@@ -129,9 +128,6 @@ public class Main {
                     service.findAllContact(state).forEach(contato -> System.out.println(contato.toString()));
                     break;
                 case "11":
-                    groupController.findAllGroups(state).forEach(group -> System.out.println(group.toString()));
-                    break;
-                case "12":
                     System.out.println("Nome do grupo: ");
                     String grupoRemove = scanner.next();
                     groupController.deletarGroup(state, grupoRemove);

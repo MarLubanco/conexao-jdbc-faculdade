@@ -31,6 +31,7 @@ Relacionar Contato com Grupo| Função para inserir um contato em um grupo  ||
 Deletar contato | Deletar um contato pelo email dele ||
 Listar contatos do grupo  | Listar todos os contatos de um grupo ||
 Listar contatos  | Listar todos os contatos existentes||
+Deletar grupo | Deletar o grupo de acordo com o nome dele||
 
 Colaborar para a atividade:
 
